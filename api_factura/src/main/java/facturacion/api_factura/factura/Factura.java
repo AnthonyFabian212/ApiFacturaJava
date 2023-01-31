@@ -27,4 +27,3 @@ public class Factura {
     @JoinColumn(name = "factura_id")
     private List<FacturaLinea> lineas = new ArrayList<>();
 }
-

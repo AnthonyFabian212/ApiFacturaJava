@@ -6,7 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
-import lombok.Data;
+import lombok.Data; 
 import facturacion.api_factura.producto.Producto;
 
 @Data
@@ -19,6 +19,7 @@ public class FacturaLinea {
 
     @ManyToOne
     private Producto producto;
+
     private BigDecimal cantidad;
     private BigDecimal precio;
 }

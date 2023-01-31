@@ -1,4 +1,5 @@
 package facturacion.api_factura.factura;
+
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,25 +19,27 @@ import facturacion.api_factura.cliente.CustomerClient;
 import facturacion.api_factura.cliente.CustomerDTO;
 
 
-
 @Service
 public class FacturaService {
-    @Autowired FacturaRepository facturaRepository;
+    @Autowired
+    FacturaRepository facturaRepository;
+
     @Autowired CustomerClient customerClient;
 
-    public Factura save(Factura entity){
+
+    public Factura save(Factura entity) {
         return facturaRepository.save(entity);
     }
 
-    public Factura findById( Long id){
+    public Factura findById(Long id) {
         return facturaRepository.findById(id).orElse(new Factura());
     }
 
-    public void deleteById(Long id){
+    public void deleteById(Long id) {
         facturaRepository.deleteById(id);
     }
 
-    public List<Factura> findAll(){
+    public List<Factura> findAll() {
         return facturaRepository.findAll();
     }
 
@@ -44,24 +47,24 @@ public class FacturaService {
 
         Map<String, Object> reportParameters = new HashMap<String, Object>();
         Factura factura = findById(id);
-        if (factura.getId()==null)
+        if (factura.getId() == null)
             return null;
-        
-        reportParameters.put("nro", factura.getNumeroFactura());
-        reportParameters.put("fecha",Date.valueOf(factura.getFecha()));
 
-        CustomerDTO cliente =  customerClient.findCustomerById(factura.getClienteId());
-        reportParameters.put("nombre_cliente", cliente.getRazon_social());
-        reportParameters.put("identificacion", cliente.getNro_identificacion());
-        
+        reportParameters.put("nro", factura.getNumeroFactura());
+        reportParameters.put("fecha", Date.valueOf(factura.getFecha()));
+
+        CustomerDTO cliente = customerClient.findCustomerById(factura.getClienteId());
+        reportParameters.put("nombre_cliente", cliente.getNombre());
+        reportParameters.put("identificacion", cliente.getCedula());
+
         List<Map<String, Object>> dataList = new ArrayList<>();
 
-        for (FacturaLinea linea : factura.getLineas()){
+        for (FacturaLinea linea : factura.getLineas()) {
             Map<String, Object> data = new HashMap<>();
             data.put("nombreProducto", linea.getProducto().getNombre());
-            data.put("cantidad",linea.getCantidad());
-            data.put("precio",linea.getPrecio());
-            data.put("subtotal",linea.getCantidad().multiply(linea.getPrecio()));
+            data.put("cantidad", linea.getCantidad());
+            data.put("precio", linea.getPrecio());
+            data.put("subtotal", linea.getCantidad().multiply(linea.getPrecio()));
             dataList.add(data);
         }
         reportParameters.put("lineasFactura", new JRBeanCollectionDataSource(dataList));
