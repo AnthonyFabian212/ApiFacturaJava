@@ -6,6 +6,7 @@
 	<parameter name="nombre_cliente" class="java.lang.String"/>
 	<parameter name="identificacion" class="java.lang.String"/>
 	<parameter name="lineasFactura" class="net.sf.jasperreports.engine.data.JRBeanCollectionDataSource"/>
+	<parameter name="elaborado" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
@@ -16,8 +17,7 @@
 		<band height="188" splitType="Stretch">
 			<image onErrorType="Icon">
 				<reportElement x="60" y="16" width="50" height="50" uuid="7f6fcabc-bf64-4c39-a358-14a5b75c1a23"/>
-				<imageExpression><![CDATA["classpath:jrxml/logo.png"
-]]></imageExpression>
+				<imageExpression><![CDATA["classpath:jrxml/logo.png"]]></imageExpression>
 			</image>
 			<rectangle>
 				<reportElement x="170" y="11" width="240" height="60" forecolor="#3DAEE9" backcolor="#3DAEE9" uuid="67a48c93-c951-4c40-a3f3-7d4862efe34e"/>
@@ -93,10 +93,26 @@
 			<subreport>
 				<reportElement x="0" y="0" width="560" height="40" uuid="b6187d58-d137-4da0-902c-dfaa5280f899"/>
 				<dataSourceExpression><![CDATA[$P{lineasFactura}]]></dataSourceExpression>
-				<subreportExpression><![CDATA["classpath:jrxml/detallefactura.jasper"
-
-]]></subreportExpression>
+				<subreportExpression><![CDATA["classpath:jrxml/detallefactura.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 	</detail>
+	<pageFooter>
+		<band height="55">
+			<staticText>
+				<reportElement x="20" y="20" width="180" height="30" uuid="db3494e9-c1be-40fa-a849-d79c940f0ea3"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Elaborado por:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="211" y="25" width="249" height="30" uuid="09022902-7f96-48a8-817f-6009295d7aa2"/>
+				<textElement>
+					<font size="14" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{elaborado}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
 </jasperReport>

@@ -1,5 +1,8 @@
 package facturacion.api_factura.cliente;
 
+import org.hibernate.annotations.CollectionId;
+
+import jakarta.persistence.Column;
 import lombok.Data;
 
 @Data
